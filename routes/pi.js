@@ -5,11 +5,6 @@ var gpio = require('gpio');
 var gpio4 = gpio.export(4);
 var intervals;
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-});
-
 router.post('/switch', function(req, res){
   var next_state = (gpio4.value == 1)?0:1;
   console.log("Next State : ", next_state);     
