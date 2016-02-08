@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Raspberry Pi - Node.JS</title>
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha256-7s5uDGW3AHqw6xtJmNNtr+OBRJUlgkNJEo78P4b0yRw= sha512-nNo+yCHEyn0smMxSswnf/OnX6/KwJuZTlNZBjauKhTK0c+zT+q5JOCx0UFhXQ6rJR9jg6Es8gPuD2uZcYDLqSw==" crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+</head>
+<body>
+	<div class="container">
+		<div class="col-md-6 col-md-offset-3 text-center">
+			<h1>RaspberryPi / Node.js</h1>
+			<br>
+<div class="col-md-6 text-center">
+
+<button class="btn btn-primary btn-lg inline " id="switch" data-state="1">Turn ON</button>
+				</div><div class="col-md-6 text-center">	<button class="btn btn-success btn-lg inline " id="blink" data-state="1" >Blink Light</button>
+
+	</div></div>
+					</div>
+
+	
+</body>
+
+<script>
+	$(document).ready(function (argument) {
+		$('#switch').on('click', function(event){
+			var texts = {
+				1 : 'Turn ON',
+				0 : 'Turn OFF'
+			};
+
+			$.post('/pi/switch', {}, function(response){
+				var next_state = (response.state == 1)?0:1;
+				$(event.currentTarget).text(texts[next_state]);
+			},'json')
+		});
+
+		$('#blink').on('click', function(event){
+			var texts = {
+				1 : 'Blink Light',
+				0 : 'Turn OFF'
+			};
+			var state = ($(event.currentTarget).text()=='Turn OFF')?0:1;
+			$.post('/pi/blink', {state : state}, function(response){
+				var next_state = (response.state == 1)?0:1;
+				$(event.currentTarget).text(texts[next_state]);
+			},'json')
+		});
+	});
+</script>
+</html>
